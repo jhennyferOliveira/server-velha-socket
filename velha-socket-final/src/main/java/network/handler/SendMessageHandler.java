@@ -1,15 +1,11 @@
 package network.handler;
 
 import model.Message;
+import network.configuration.Server;
 
 import static model.enumeration.MessageCode.Code.*;
 
-/**
- * Interacts with the DataFlowHandler class to send messages
- */
 public class SendMessageHandler {
-
-    private final DataFlowHandler dataFlowHandler = DataFlowHandler.getInstance();
 
     public static SendMessageHandler sendMessageHandler;
 
@@ -20,14 +16,54 @@ public class SendMessageHandler {
         return sendMessageHandler;
     }
 
+    /**
+     * Getting remote object from server to send message using RMI
+     */
     public void setMessageToSend(Message message) {
         switch (message.getCode()) {
-            case GIVE_UP -> dataFlowHandler.setMessageToSend( GIVE_UP.code);
-            case PASS_TURN -> dataFlowHandler.setMessageToSend(PASS_TURN.code + message.getTextMessage());
-            case CLOSE_WINDOW -> dataFlowHandler.setMessageToSend(CLOSE_WINDOW.code);
-            case INIT_NUMBER -> dataFlowHandler.setMessageToSend(INIT_NUMBER.code + message.getTextMessage());
-            case CHAT -> dataFlowHandler.setMessageToSend(CHAT.code + message.getTextMessage());
-            case EMPTY -> dataFlowHandler.setMessageToSend(EMPTY.code);
+
+            case GIVE_UP -> {
+                try {
+                    Server.remoteObject.sendMessage(GIVE_UP.code + message.getTextMessage());
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            case PASS_TURN -> {
+                try {
+                    Server.remoteObject.sendMessage(PASS_TURN.code + message.getTextMessage());
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            case CLOSE_WINDOW -> {
+                try {
+                    Server.remoteObject.sendMessage(CLOSE_WINDOW.code);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            case INIT_NUMBER -> {
+                try {
+                    Server.remoteObject.sendMessage(INIT_NUMBER.code + message.getTextMessage());
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            case CHAT -> {
+                try {
+                    Server.remoteObject.sendMessage(CHAT.code + message.getTextMessage());
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            case EMPTY -> {
+                try {
+                    Server.remoteObject.sendMessage(EMPTY.code + message.getTextMessage());
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
         }
     }
 }
